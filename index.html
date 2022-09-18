@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assessment-2</title>
+    <!--<link rel="stylesheet" href="/Assessment-2/style.css">-->
+    <style>
+        .b1{
+    background-color: rgb(222, 173, 253);
+}
+
+table{
+    width: 300px;
+    font: 17px Calibri;
+    margin-left: 140px;
+}
+
+table, th, td{
+    border: solid 1px black;
+    border-collapse: collapse;
+    padding: 35px 35px;
+    text-align: center;
+}
+
+table img{
+    border: none;
+    width: 300px;
+    height: 300px;
+}
+
+.countryBtn{
+    background-color: black;
+    color: antiquewhite;
+    border-radius: 10px;
+    height: 40px;
+    width: 180px;
+    border: 2px solid rgb(208, 240, 46);
+}
+
+.countryBtn:hover{
+    background-color: rgb(124, 186, 30);
+    color: black;
+    
+}
+
+
+.popup
+{
+    position:absolute;
+    top:0px;
+    left:0px;
+    margin:100px auto;
+    width:200px;
+    height:150px;
+    font-family:verdana;
+    font-size:13px;
+    padding:10px;
+    background-color:rgb(116, 35, 35);
+    border:2px solid grey;
+    z-index:100000000000000000;
+    display:none
+}
+
+.cancel
+{
+    display:relative;
+    cursor:pointer;
+    margin:0;
+    float:right;
+    height:10px;
+    width:14px;
+    padding:0 0 5px 0;
+    background-color:red;
+    text-align:center;
+    font-weight:bold;
+    font-size:11px;
+    color:white;
+    border-radius:3px;
+    z-index:100000000000000000;
+}
+
+.alert {
+    padding: 20px;
+    background-color: #f44336; /* Red */
+    color: white;
+    margin-bottom: 15px;
+  }
+
+.bigdiv{
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    position:absolute;
+    background-color: rgb(0,0,0,0.5);
+    display: flex;
+    justify-content:center ;
+    text-align: center;
+    visibility: hidden;
+    opacity: 0.5;
+    transition: visibility 0s,opacity 1s;
+}
+
+/*This is the active background*/
+.bg-active{
+    visibility: visible;
+    opacity: 1;
+}
+
+
+
+.innerdiv{
+    background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvzuNwEBvio23IpRCl4TnAOgNKTiI0gTaQeQ&usqp=CAU");
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: white;
+    width: 50%;
+    height: 50%;
+    margin:auto;
+    display: flex;
+    border-radius: 20px;
+}
+
+.close{
+    background: rgb(237, 146, 164);
+    color: black;
+    border: none;
+    cursor: pointer;
+    font-family: Arial, Helvetica, sans-serif;
+    width: 27%;
+    height: 36px;
+    border-radius: 18px;
+    margin-block: auto;
+    margin-bottom: 40px;
+    margin-left: 30px;
+}
+
+.para{
+    font-size: 25px;
+    color: aliceblue;
+    text-align: center;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+}
+
+.temp{
+    margin-top: 20px;
+    margin-left: 20px;
+    width: 1200%;
+    height: 50px;
+    background-color: aliceblue;
+    color: #f44336;
+    border: 1px solid white;
+    
+}
+
+.humidity{
+    margin-top: 90px;
+    width: 1200%;
+    height: 50px;
+    margin-right: 120px;
+    background-color: aliceblue;
+    color: #f44336;
+    border: 1px solid rgb(15, 14, 14);
+    
+}
+
+.rain{
+    margin-top: 150px;
+    width: 1200%;
+    height: 50px;
+    margin-right: 10px;
+    background-color: aliceblue;
+    color: #f44336;
+    border: 1px solid white;
+     
+}
+
+.t1{
+    margin-top: 10px;
+    margin-left: 10px;
+    color: white;
+}
+
+.hum{
+    margin-top: 10px;
+    margin-left: 50px;
+    color: white;
+}
+
+
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+</head>
+
+<body class = "b1">
+    <h1 style = "text-align: center; background-color: rgb(87, 17, 152); color: aliceblue;"><marquee direction = "right" scrollamount = "15">WEATHER FORECAST</marquee></h1>
+    <!-- <input type = 'button' onclick = 'tableJson' value = 'Display Table' /> -->
+    <section class = "sec"></section>
+    <p id = "show"></p>
+    
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"
+        integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+"
+        crossorigin="anonymous"></script>
+    <!--<script src="/Assessment-2/script.js"></script>-->
+    <script>
+        const url = "https://restcountries.com/v2/all";
+
+let tableJson = (url) => {
+    fetch(url, {
+      method: "GET",
+    })
+      .then((data) => data.json())
+      .then((response) => {
+        fetchNames(response);
+        //fetchCapital(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+tableJson(url);
+
+
+let weatherarr = [];
+let a = [];
+function fetchNames(data){
+ 
+    for(let i=0;i<data.length;i++)
+    {
+      let n = {
+        name:null,
+        flag : null,
+        weather :null,
+        capital : null
+      };
+      n.name = data[i].name;
+      n.flag = data[i].flag;
+      n.capital = data[i].capital;
+      a.push(n);
+    }
+    //console.log(a);
+    
+  
+
+// let n = a.length;
+ //console.log(n);
+
+  //extract values for table head
+  let col = [];
+  for(let i=0;i<a.length;i++){
+    for(let key in a[i]){
+      if(col.indexOf(key) === -1){
+        col.push(key);
+      }
+    }
+  }
+
+ //create table 
+const table = document.createElement('table');
+
+let tr = table.insertRow(-1);
+
+for(let i=0;i<col.length;i++){
+  let th = document.createElement("th");
+  th.innerHTML = col[i];
+  tr.appendChild(th);
+}
+
+//add json data to table as rows
+for (let i = 0; i < a.length; i++) {
+
+  tr = table.insertRow(-1);
+
+let capital1=a[i].capital;
+//console.log(capital1);
+
+const url2 =  `https://api.openweathermap.org/data/2.5/weather?q=${capital1}&appid=74ca63f5c9014daf74ae560d33d40924`;
+let w = (url2) => {
+  fetch(url2, {
+    method: "GET",
+  })
+    .then((data) => data.json())
+    .then((response) => {
+      weather2(response)
+      //console.log(response);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+w(url2);
+
+
+function weather2(data){
+  //console.log(data.coord.lat);
+  let file = {
+    country_name : null,
+    temp : null,
+    humidity : null
+  };
+  file.country_name =a[i].name;
+  file.temp = data.main.temp;
+  file.humidity = data.main.humidity;
+  //console.log(file.temp);
+  weatherarr.push(file);
+  //console.log(weatherarr)
+}
+
+
+  for (let j = 0; j < col.length; j++) {
+    let tabCell = tr.insertCell(-1);
+    if(j===1){
+      var image=document.createElement('img');
+      image.src=a[i][col[j]];
+      tabCell.appendChild(image);
+    }
+    else if(j===2){
+      var btn = document.createElement('button');
+      btn.className = "countryBtn";
+      btn.innerHTML = "Weather_Report"
+      tabCell.appendChild(btn);
+      //btn.onclick = function popup1(){
+        //alert("hi");
+        /*
+        alert("Weather Reports is as follows - ");
+        var m = true;
+        while(m){
+          var humidity = prompt('Humidity = ');
+          alert('Humidity = '+humidity);
+          m = confirm('Do you want to know more ? ')
+        }
+        alert('Thankyou !');
+        */
+        /*
+        var popup = document.createElement('div');
+        popup.className = 'popup';
+        popup.id = 'test';
+        var cancel = document.createElement('div');
+        cancel.className = 'cancel';
+        cancel.innerHTML = 'close';
+        cancel.onclick = function (e) { popup.parentNode.removeChild(popup) };
+        var message = document.createElement('span');
+        message.innerHTML = "This is a test message";
+        popup.appendChild(message);                                    
+        popup.appendChild(cancel);
+        document.body.appendChild(popup);
+        */
+
+        //opens a new page-working
+        /*
+        var popup = open("", "Popup", "width=500,height=150");
+        popup.className = "popupCss";
+        var txtOk = popup.document.createElement("TEXTAREA");
+        var aOk = popup.document.createElement("a");
+        aOk.innerHTML = "Click here";
+        
+        popup.document.body.appendChild(txtOk);
+        popup.document.body.appendChild(aOk);
+        */
+      //};
+      btn.addEventListener('click',function (){
+        let m = document.createElement('div');
+        m.className = 'bigdiv';
+
+        document.getElementsByClassName('sec')[0].appendChild(m);
+
+        let innerdiv = document.createElement('div');
+        innerdiv.className = 'innerdiv';
+
+        m.appendChild(innerdiv);
+
+        //let h1 = document.createElement('h1');
+        //h1.innerText = 
+
+        /*
+        let para = document.createElement('p');
+        para.innerText = "|| Weather Report ||";
+        para.className = "para";
+        para.style.marginLeft = "200px";
+        para.style.marginTop = "5px";
+
+        innerdiv.appendChild(para);
+        */
+
+        /*
+        let temp = document.createElement('p')
+        temp.innerText = "Temperature = 45 degree";
+        temp.className = "temp";
+
+        innerdiv.appendChild(temp);
+
+        let humidity = document.createElement('p')
+        humidity.innerText = "Humidity = 45 degree";
+        humidity.className = "humidity";
+        
+        
+        innerdiv.appendChild(humidity);
+        */
+
+        //----------------------------------------------------------------------------------------
+
+        //weatherarray
+        //console.log(weatherarr);
+        for(let j=0;j<weatherarr.length;j++){
+             if(weatherarr[j].country_name===a[i].name){
+
+             let s1=document.createElement('span');
+             let s2=document.createElement('span');
+             
+             s1.className = "t1";
+             s2.className = "hum";
+
+             let pp1=document.createElement('p');
+             let p1=document.createElement('p');
+             s1.appendChild(pp1);
+             s1.appendChild(p1);
+
+             let pp2=document.createElement('p');
+             let p2=document.createElement('p');
+             s2.appendChild(pp2);
+             s2.appendChild(p2);
+      
+             pp1.innerHTML="TEMPERATURE ";
+             p1.innerHTML=weatherarr[j].temp;
+
+             pp2.innerHTML="HUMIDITY ";
+             p2.innerHTML=weatherarr[j].humidity;
+             
+             innerdiv.appendChild(s1);
+             innerdiv.appendChild(s2);
+
+             
+             }
+        }
+        //----------------------------------------------------------------------------------------
+
+        let close = document.createElement('button');
+        close.className = "close";
+        close.style.background = "blue";
+        close.innerText = "Close Report";
+        
+
+        innerdiv.appendChild(close);
+
+        m.classList.add('bg-active');
+
+        close.addEventListener('click',function (){
+          m.classList.remove('bg-active');
+        })
+      })
+    }
+    else{
+    tabCell.innerHTML = a[i][col[j]];
+    }
+
+  }
+
+  
+  
+
+const divShowData = document.getElementById('show');
+    divShowData.innerHTML = "";
+    divShowData.appendChild(table);
+
+}
+
+console.log(weatherarr);
+//let capitals = []
+//let i =0;
+/*
+function fetchCapital(data){
+  for(i=0;i<data.length;i++){
+    capitals.push(data[i].capital);
+  }
+  console.log(capitals);
+}
+*/
+
+
+}
+    </script>
+</body>
+
+</html>
